@@ -4,16 +4,16 @@ import java.util.List;
 
 import com.heniktechnology.mobile_api.pojo.user.UserRegister;
 
-public class Request {
+public class HNRequest<T> {
 	
-	private List<UserRegister> data;
+	private List<T> data;
 
-	public List<UserRegister> getData() {
+	public List<T> getData() {
 		
 		return data;
 	}
 
-	public void setData(List<UserRegister> data) {
+	public void setData(List<T> data) {
 		this.data = data;
 	}
 
