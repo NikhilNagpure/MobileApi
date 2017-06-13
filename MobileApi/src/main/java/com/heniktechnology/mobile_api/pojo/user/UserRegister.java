@@ -1,6 +1,8 @@
 package com.heniktechnology.mobile_api.pojo.user;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -8,7 +10,7 @@ import javax.persistence.Id;
 public class UserRegister {
 
 
-	@Id
+	@Id  
     private String loginId;
 
     private String password;

@@ -32,7 +32,6 @@ public class UserControllers {
 
 	@RequestMapping(method = RequestMethod.POST, value = UrlConstants.USER_REGISTER)
 	public HNResponse userRegister(@RequestBody HNRequest<UserRegister> request) {
-
 		try {
 
 			if (ApiController.ADMIN_ACTIVE_API) {
@@ -96,10 +95,11 @@ public class UserControllers {
 
 	}
 
-	@RequestMapping(UrlConstants.USER_UNREGISTER)
-	public HNResponse userUnregister() {
-		
+	@RequestMapping(method = RequestMethod.DELETE, value = UrlConstants.USER_LOGIN)
+	public HNResponse userUnregister(@RequestBody UserRegister register) {
 		try {
+			
+			
 			return new HNResponse();
 			
 		} catch (Exception e) {
