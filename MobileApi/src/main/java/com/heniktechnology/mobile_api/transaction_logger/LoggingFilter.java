@@ -20,6 +20,7 @@ package com.heniktechnology.mobile_api.transaction_logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.heniktechnology.mobile_api.ApiController;
@@ -42,7 +43,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Component
+@Service
 public class LoggingFilter extends OncePerRequestFilter {
 
 	private static final String REQUEST_PREFIX = "Request: ";
@@ -70,11 +71,15 @@ public class LoggingFilter extends OncePerRequestFilter {
 			// response.flushBuffer();
 		} finally {
 
-			if (ApiController.ADMIN_ENABLE_REQUEST_RESPONCE_STORE) {
+			if (ApiController.ADMIN_ENABLE_REQUEST_RESPONCE_STORE) 
+			{
 				ApiTransactions apiTransactions = new ApiTransactions(requestId, logRequest(request),
 						logResponse((ResponseWrapper) response), String.valueOf(DateTimeManager.getTimeStamp()),
 						String.valueOf(DateTimeManager.getTimeStamp()), "NA", String.valueOf(response.getStatus()));
 				log(TAG, "apiTransactions : " + apiTransactions.toString());
+				
+				apiTransactionsService.saveApiTransactionsinDataBase(apiTransactions);
+				
 			}
 
 		}
