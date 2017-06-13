@@ -8,23 +8,19 @@ import javax.persistence.Id;
 @Entity
 public class ApiTransactions {
 
-	@Id @GeneratedValue(strategy=GenerationType.AUTO) 
-	private long transactionsId;
-	private String request;
-	private String response;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long transactionsId;
+	private Request request;
+	private Response response;
 	private String requestTimeStamp;
 	private String responseTimeStamp;
 	private String userId;
 	private String Status;
 
-	public ApiTransactions() {
+	public ApiTransactions(Request request, Response response, String requestTimeStamp, String responseTimeStamp,
+			String userId, String status) {
 		super();
-	}
-
-	public ApiTransactions(String transactionsId, String request, String response, String requestTimeStamp,
-			String responseTimeStamp, String userId, String status) {
-		super();
-		this.transactionsId = Long.valueOf(transactionsId);
 		this.request = request;
 		this.response = response;
 		this.requestTimeStamp = requestTimeStamp;
@@ -33,28 +29,48 @@ public class ApiTransactions {
 		Status = status;
 	}
 
+	public ApiTransactions(Long transactionsId, Request request, Response response, String requestTimeStamp,
+			String responseTimeStamp, String userId, String status) {
+		super();
+		this.transactionsId = transactionsId;
+		this.request = request;
+		this.response = response;
+		this.requestTimeStamp = requestTimeStamp;
+		this.responseTimeStamp = responseTimeStamp;
+		this.userId = userId;
+		Status = status;
+	}
+
+	public ApiTransactions() {
+		super();
+	}
+
+	public Request getRequest() {
+		return request;
+	}
+
+	public void setRequest(Request request) {
+		this.request = request;
+	}
+
+	public Response getResponse() {
+		return response;
+	}
+
+	public void setResponse(Response response) {
+		this.response = response;
+	}
+
+	public void setTransactionsId(Long transactionsId) {
+		this.transactionsId = transactionsId;
+	}
+
 	public String getTransactionsId() {
 		return String.valueOf(transactionsId);
 	}
 
 	public void setTransactionsId(String transactionsId) {
 		this.transactionsId = Long.valueOf(transactionsId);
-	}
-
-	public String getRequest() {
-		return request;
-	}
-
-	public void setRequest(String request) {
-		this.request = request;
-	}
-
-	public String getResponse() {
-		return response;
-	}
-
-	public void setResponse(String response) {
-		this.response = response;
 	}
 
 	public String getRequestTimeStamp() {

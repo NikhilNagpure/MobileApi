@@ -22,8 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.heniktechnology.mobile_api.ApiController;
 import com.heniktechnology.mobile_api.pojo.api_observer.ApiTransactions;
 import com.heniktechnology.mobile_api.pojo.api_observer.ApiTransactionsService;
+import com.heniktechnology.mobile_api.pojo.api_observer.Request;
+import com.heniktechnology.mobile_api.pojo.api_observer.Response;
 import com.heniktechnology.mobile_api.utill.DateTimeManager;
 import com.heniktechnology.mobile_api.utill.Logger;
 import com.mysql.fabric.xmlrpc.base.Data;
@@ -48,15 +51,17 @@ public class LoggingFilter extends OncePerRequestFilter {
 	private String TAG = LoggingFilter.class.getSimpleName();
 
 	@Autowired()
-	private ApiTransactionsService apiTransactionsService ;
+	private ApiTransactionsService apiTransactionsService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 			final FilterChain filterChain) throws ServletException, IOException {
 
+		long requestId = 0;
+
 		if (Logger.isLoggerEnabled()) {
 
-			long requestId = id.incrementAndGet();
+			requestId = id.incrementAndGet();
 			request = new RequestWrapper(requestId, request);
 			response = new ResponseWrapper(requestId, response);
 		}
@@ -65,20 +70,21 @@ public class LoggingFilter extends OncePerRequestFilter {
 			// response.flushBuffer();
 		} finally {
 
-			ApiTransactions apiTransactions = new ApiTransactions(String.valueOf(id),
-					logRequest(request), logResponse((ResponseWrapper) response),
-					String.valueOf(DateTimeManager.getTimeStamp()), String.valueOf(DateTimeManager.getTimeStamp()),
-					"NA", String.valueOf(response.getStatus()));
-			log(TAG, "apiTransactions : "+ apiTransactions.toString());
-			
-			//apiTransactionsService.saveApiTransactionsinDataBase(apiTransactions);
+			if (ApiController.ADMIN_ENABLE_REQUEST_RESPONCE_STORE) {
+				ApiTransactions apiTransactions = new ApiTransactions(requestId, logRequest(request),
+						logResponse((ResponseWrapper) response), String.valueOf(DateTimeManager.getTimeStamp()),
+						String.valueOf(DateTimeManager.getTimeStamp()), "NA", String.valueOf(response.getStatus()));
+				log(TAG, "apiTransactions : " + apiTransactions.toString());
+			}
 
 		}
 
 	}
 
-	private String logRequest(final HttpServletRequest request) {
+	private Request logRequest(final HttpServletRequest request) {
+
 		StringBuilder msg = new StringBuilder();
+
 		msg.append(REQUEST_PREFIX);
 		if (request instanceof RequestWrapper) {
 			msg.append("request id=").append(((RequestWrapper) request).getId()).append("; ");
@@ -115,7 +121,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		}
 		log(TAG, msg.toString());
 
-		return msg.toString();
+		return new Request(request);
 	}
 
 	private boolean isBinaryContent(final HttpServletRequest request) {
@@ -130,7 +136,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		return request.getContentType() != null && request.getContentType().startsWith("multipart/form-data");
 	}
 
-	private String logResponse(final ResponseWrapper response) {
+	private Response logResponse(final ResponseWrapper response) {
 		StringBuilder msg = new StringBuilder();
 		msg.append(RESPONSE_PREFIX);
 		msg.append("request id=").append((response.getId()));
@@ -141,7 +147,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		}
 		log(TAG, msg.toString());
 
-		return msg.toString();
+		return new Response(response);
 	}
 
 }

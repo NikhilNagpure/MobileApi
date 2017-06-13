@@ -5,20 +5,18 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.heniktechnology.mobile_api.transaction_logger.LoggingFilter;
 
-
-@EnableAutoConfiguration 
-@Configuration 
+/*@EnableAutoConfiguration 
+@Configuration */
 public class SpringConfiguration {
 
 	
-	 @Bean 
+	/* @Bean 
 	    public FilterRegistrationBean LoggingFilterBean() { 
 	        final FilterRegistrationBean registrationBean = new FilterRegistrationBean(); 
 	        registrationBean.setFilter(new LoggingFilter()); 
 	        registrationBean.addUrlPatterns("/*"); 
 	        return registrationBean; 
 	    } 
-	
+	*/
 }
