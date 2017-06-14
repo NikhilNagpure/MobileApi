@@ -16,11 +16,8 @@ public class BasicInitializer {
 	@Autowired
 	private AdminService adminService;
 
-	public BasicInitializer() {
-		insertValuInDataBase();
-	}
-
-	private void insertValuInDataBase() {
+	
+	public void insertValuInDataBase() {
 
 		/*
 		 * for (int i = 0; i < Constants.PERMISSION_LIST.size(); i++) {

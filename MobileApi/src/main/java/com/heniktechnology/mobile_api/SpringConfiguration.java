@@ -24,12 +24,14 @@ public class SpringConfiguration {
 	        return registrationBean; 
 	    } 
 	 
+	 
 	 @Bean 
-	    public FilterRegistrationBean LoggingFilterBean() { 
-	        final FilterRegistrationBean registrationBean = new FilterRegistrationBean(); 
-	        registrationBean.setFilter(loggingFilter); 
-	        registrationBean.addUrlPatterns("/*"); 
-	        return registrationBean; 
+	    public BasicInitializerBean BasicInitializer() { 
+	        final BasicInitializerBean initializerBean = new BasicInitializerBean(); 
+	        initializerBean.setFilter(loggingFilter); 
+	        initializerBean.addUrlPatterns("/*"); 
+	        return initializerBean; 
 	    } 
+	 
 	
 }

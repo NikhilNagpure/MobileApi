@@ -4,10 +4,14 @@ import static com.heniktechnology.mobile_api.utill.Logger.log;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.hibernate.annotations.Type;
 
 import com.heniktechnology.mobile_api.transaction_logger.RequestWrapper;
 @Embeddable
@@ -20,6 +24,7 @@ public class Request {
 	private String method = "";
 	private String contentType = "";
 	private String uri = "";
+	@Lob
 	private String payloadRequast = "";
 
 	public Request() {

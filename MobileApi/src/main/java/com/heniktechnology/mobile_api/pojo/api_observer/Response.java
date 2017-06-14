@@ -5,7 +5,10 @@ import static com.heniktechnology.mobile_api.utill.Logger.log;
 import java.io.UnsupportedEncodingException;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
 
 import com.heniktechnology.mobile_api.transaction_logger.ResponseWrapper;
 
@@ -14,6 +17,7 @@ public class Response {
 	@Transient
 	private String TAG = Response.class.getSimpleName();
 	private String responseId = "";
+	@Lob
 	private String payloadResponce = "";
 
 	

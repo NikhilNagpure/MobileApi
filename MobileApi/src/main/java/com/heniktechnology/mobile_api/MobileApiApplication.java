@@ -12,7 +12,7 @@ import com.heniktechnology.mobile_api.utill.Logger;
 public class MobileApiApplication {
 	
 	@Autowired
-	private BasicInitializer basicInitializer;
+	private static BasicInitializer basicInitializer;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MobileApiApplication.class, args);
@@ -20,7 +20,7 @@ public class MobileApiApplication {
 		Logger.enabledLogger(ApiController.ADMIN_ENABLE_LOGGER);
 		Logger.log(TAG, " Running ");
 		
-
+		basicInitializer.insertValuInDataBase();
 	}
 
 }
